@@ -46,21 +46,6 @@ app.put('/pessoas/:id', async (req, res) => {
         res.status(500).json({ "errors": [{ msg: "Houve um erro." }] })
     }
 })
-app.delete('/pessoas/:id', async (req, res) => {
-    try {
-        const sql = 'DELETE FROM pessoa WHERE id = $1 RETURNING id'
-        const { rows } = await postgres.query(sql, [req.params.id])
-        if (rows.length === 0) {
-            res.status(404).json({ "errors": [{ msg: "not found" }] })
-            return
-        }
-        res.status(204)
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ "errors": [{ msg: "Houve um erro." }] })
-    }
-})
-
 
 app.post('/pessoas', async (req, res) => {
     try {
