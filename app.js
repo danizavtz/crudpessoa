@@ -34,7 +34,7 @@ app.get('/pessoas/:id', async (req, res) => {
 })
 app.put('/pessoas/:id', async (req, res) => {
     try {
-        const sql = 'UPDATE pessoa SET nome = $2, apelido = $3, nascimento = $4 WHERE id = $1'
+        const sql = 'UPDATE pessoa SET nome = $2, apelido = $3, nascimento = $4 WHERE id = $1 RETURNING *'
         const { rows } = await postgres.query(sql, [req.params.id, req.body.nome, req.body.apelido, req.body.nascimento])
         if (rows.length === 0) {
             res.status(404).json({ "errors": [{ msg: "not found" }] })
